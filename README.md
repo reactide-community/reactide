@@ -10,6 +10,43 @@ Reactide is a cross-platform desktop application that offers a custom simulator,
   <img alt="Reactide Screenshot" src="http://reactide.io.s3-website-us-west-1.amazonaws.com/images/reactide-screenshot2.png">
 </p>
 
+## How to start
+
+To use reactide as it is now, follow this few steps.
+
+Clone ```reactide``` repo and go into the project folder
+- ```git clone https://github.com/reactide/reactide.git```
+- ```cd ./reactide```
+
+Install dependencies
+
+```yarn install``` or ```npm install```
+
+Create production build npm script and run it (or just use webpack in root of reactide repo)
+
+```
+"scripts": {
+   "...": "...",
+    "build": "webpack -p"
+}
+```
+
+Finally, start reactide with ```yarn start``` or ```npm run start``` script
+
+Reactide opens and if devtools is opened, it shouldn't have any errors
+
+![screen shot 2017-04-07 at 10 46 21](https://cloud.githubusercontent.com/assets/7074196/24792753/9976c66e-1b7f-11e7-9ed6-b3651d3ad7a2.png)
+
+Now, a new project can be created on the MenuBar
+
+![screen shot 2017-04-07 at 10 43 39](https://cloud.githubusercontent.com/assets/7074196/24792791/be772b70-1b7f-11e7-8caa-3cf90f1bbfa1.png)
+
+Then, it'd look like this:
+
+![screen shot 2017-04-07 at 10 49 59](https://cloud.githubusercontent.com/assets/7074196/24792853/ffb8209e-1b7f-11e7-8b6e-8d670cd31bd6.png)
+
+Any change made on src/components/App.js would be displayed on the simulator
+
 ## Get right to coding
 Reactide runs an integrated Node server and custom browser simulator, which eliminates the need to configure servers, build-tools, and even offers hot module reloading right out of the box. Projects developed in Reactide are build-tool agnostic. As projects evolve, the developer only needs to add necessary dependencies without having to make decisions before coding has even started.
 
