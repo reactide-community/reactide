@@ -40,21 +40,6 @@ export default class App extends React.Component {
     };
 
     this.fileTreeInit();
-    this.clickHandler = this.clickHandler.bind(this);
-    this.setFileTree = this.setFileTree.bind(this);
-    this.dblClickHandler = this.dblClickHandler.bind(this);
-    this.setActiveTab = this.setActiveTab.bind(this);
-    this.isFileOpened = this.isFileOpened.bind(this);
-    this.saveTab = this.saveTab.bind(this);
-    this.addEditorInstance = this.addEditorInstance.bind(this);
-    this.closeTab = this.closeTab.bind(this);
-    this.openCreateMenu = this.openCreateMenu.bind(this);
-    this.closeOpenDialogs = this.closeOpenDialogs.bind(this);
-    this.createMenuHandler = this.createMenuHandler.bind(this);
-    this.createItem = this.createItem.bind(this);
-    this.findParentDir = this.findParentDir.bind(this);
-    this.deletePromptHandler = this.deletePromptHandler.bind(this);
-    this.renameHandler = this.renameHandler.bind(this);
 
     //reset tabs, should store state in local storage before doing this though
     ipcRenderer.on('openDir', (event, projPath) => {
@@ -106,7 +91,7 @@ export default class App extends React.Component {
     });
   }
   //sends old path and new name to main process to rename, closes rename form and sets filechangetype and newName for fswatch
-  renameHandler(event) {
+  renameHandler = (event) => {
     if (event.key === 'Enter' && event.target.value) {
       ipcRenderer.send('rename', this.state.selectedItem.path, event.target.value);
       this.setState({
@@ -121,7 +106,7 @@ export default class App extends React.Component {
     }
   }
   //handles click event from delete prompt
-  deletePromptHandler(answer) {
+  deletePromptHandler = (answer) => {
     if (answer) {
       ipcRenderer.send('delete', this.state.selectedItem.path);
     } else {
@@ -135,7 +120,7 @@ export default class App extends React.Component {
     });
   }
   //handles click events for directories and files in file tree render
-  clickHandler(id, filePath, type, event) {
+  clickHandler = (id, filePath, type, event) => {
     const temp = this.state.fileTree;
 
     document.body.onkeydown = event => {
@@ -272,7 +257,7 @@ export default class App extends React.Component {
   }
 
   //returns index of file/dir in files or subdirectories array
-  findItemIndex(filesOrDirs, name) {
+  findItemIndex (filesOrDirs, name) => {
     for (var i = 0; i < filesOrDirs.length; i++) {
       if (filesOrDirs[i].name === name) {
         return i;
@@ -282,7 +267,7 @@ export default class App extends React.Component {
   }
 
   //returns parent directory object of file/directory in question
-  findParentDir(dirPath, directory = this.state.fileTree) {
+  findParentDir = (dirPath, directory = this.state.fileTree) => {
     if (directory.path === dirPath) return directory;
     else {
       let dirNode;
@@ -294,7 +279,7 @@ export default class App extends React.Component {
   }
 
   //click handler for plus button on directories, 'opens' new file/dir menu by setting openMenuID state
-  openCreateMenu(id, itemPath, type, event) {
+  openCreateMenu = (id, itemPath, type, event)=> {
     event.stopPropagation();
     this.setState({
       openMenuId: id,
@@ -307,7 +292,7 @@ export default class App extends React.Component {
   }
 
   //handler for create menu
-  createMenuHandler(id, type, event) {
+  createMenuHandler = (id, type, event) => {
     //unhook keypress listeners
     document.body.onkeydown = () => {};
 
@@ -324,7 +309,7 @@ export default class App extends React.Component {
 
   //sends input name to main, where the file/directory is actually created.
   //creation of new file/directory will trigger watch handler
-  createItem(event) {
+  createItem = (event) => {
     if (event.key === 'Enter') {
       //send path and file type to main process to actually create file/dir only if there is value
       if (event.target.value)
@@ -343,7 +328,7 @@ export default class App extends React.Component {
   }
 
   //tab close handler
-  closeTab(id, event) {
+  closeTab = (id, event) => {
     const temp = this.state.openTabs;
     for (var i = 0; i < temp.length; i++) {
       if (temp[i].id === id) {
@@ -355,7 +340,7 @@ export default class App extends React.Component {
     this.setState({ openTabs: temp, activeTab: temp[0] ? temp[0].id : null });
   }
 
-  addEditorInstance(editor, id) {
+  addEditorInstance = (editor, id) => {
     const temp = this.state.openTabs;
     let i = 0;
     while (this.state.openTabs[i].id !== id) {
@@ -368,7 +353,7 @@ export default class App extends React.Component {
   }
 
   //save handler
-  saveTab() {
+  saveTab = () => {
     for (var i = 0; i < this.state.openTabs.length; i++) {
       if (this.state.openTabs[i].id === this.state.activeTab) {
         fs.writeFileSync(this.state.openTabs[i].path, this.state.openTabs[i].editor.getValue(), { encoding: 'utf8' });
@@ -378,7 +363,7 @@ export default class App extends React.Component {
   }
 
   //sets active tab
-  setActiveTab(id) {
+  setActiveTab = (id) => {
     this.setState({ activeTab: id }, () => {
       let editorNode = document.getElementById(id);
 
@@ -392,7 +377,7 @@ export default class App extends React.Component {
   }
 
   //double click handler for files
-  dblClickHandler(file) {
+  dblClickHandler = (file) => {
     let id = this.isFileOpened(file);
     if (id === -1) {
       const openTabs = this.state.openTabs;
@@ -412,7 +397,7 @@ export default class App extends React.Component {
   }
 
   //checks if project is already open
-  isFileOpened(file) {
+  isFileOpened = (file) => {
     for (var i = 0; i < this.state.openTabs.length; i++) {
       if (this.state.openTabs[i].path === file.path) {
         return this.state.openTabs[i].id;
@@ -427,7 +412,7 @@ export default class App extends React.Component {
   }
 
   //closes any open dialogs, handles clicks on anywhere besides the active open menu/form
-  closeOpenDialogs() {
+  closeOpenDialogs = () => {
     const selectedItem = this.state.selectedItem;
     selectedItem.focused = false;
 
