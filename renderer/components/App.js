@@ -5,11 +5,11 @@ import DeletePrompt from './DeletePrompt'
 import MockComponentTree from './MockComponentTree'
 import MockComponentInspector from './MockComponentInspector'
 
-const { ipcRenderer } = require('electron')
-const { getTree } = require('../../lib/file-tree')
-const fs = require('fs')
-const path = require('path')
-const { File, Directory } = require('../../lib/item-schema')
+import { ipcRenderer } from 'electron'
+import { getTree } from '../../lib/file-tree'
+import fs from 'fs'
+import path from 'path'
+import { File, Directory } from '../../lib/item-schema' 
 
 export default class App extends React.Component {
   constructor() {
